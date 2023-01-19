@@ -85,7 +85,7 @@ function App() {
             loginMethodsOrder: ["google"],
             defaultLanguage: "en",
           },
-          web3AuthNetwork: "cyan",
+          web3AuthNetwork: "testnet",
         });
 
         const openloginAdapter = new OpenloginAdapter({
