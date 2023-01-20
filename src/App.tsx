@@ -12,7 +12,7 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { SmartWallet } from "./components/SmartWallet";
 import { Eoa } from "./components/Eoa";
 import { Counter } from "./components/Counter";
-import { COUNTER_CONTRACT_ABI, TARGET } from "./constants";
+import { CHAIN_ID, COUNTER_CONTRACT_ABI, TARGET } from "./constants";
 import { Loading } from "./components/Loading";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
@@ -77,7 +77,7 @@ function App() {
           clientId,
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: "0x5", //TODO: Check why ethers.utils.hexlify return 0x05 instead
+            chainId: ethers.utils.hexValue(CHAIN_ID),
           },
           uiConfig: {
             appName: "Gelato",
@@ -205,7 +205,7 @@ function App() {
           />
           <Counter
             address={TARGET}
-            chainId={5}
+            chainId={CHAIN_ID}
             counter={counter}
             handleClick={increment}
           />

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { ITask, updateTasks } from "../store/slices/taskSlice";
 import { Card } from "./Card";
 import { gelatoRelay } from "../gelatoRelay";
+import { CHAIN_ID } from "../constants";
 
 export enum TaskState {
   Pending = "Pending",
@@ -101,9 +102,9 @@ const Task: React.FC<{ task: ITask }> = (props) => {
       ? "text-state-failed"
       : "text-state-pending";
 
-  //TODO: Remove hardcoded 5
-  const explorerUrl =
-    5 && details?.txHash ? getBlockExplorerUrl(5, details.txHash) : null;
+  const explorerUrl = details?.txHash
+    ? getBlockExplorerUrl(CHAIN_ID, details.txHash)
+    : null;
   return (
     <div className="bg-[#f5c3a6] bg-opacity-10 p-5 shadow-md flex flex-col rounded-lg">
       <div className="flex-col flex items-start gap-1">

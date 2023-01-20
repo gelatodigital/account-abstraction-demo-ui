@@ -1,3 +1,4 @@
+import { CHAIN_ID } from "../constants";
 import { BlockExplorerDataType, getBlockExplorerUrl } from "../utils";
 
 export const SmartWallet: React.FC<{ address: string; isDeployed: boolean }> = (
@@ -11,7 +12,7 @@ export const SmartWallet: React.FC<{ address: string; isDeployed: boolean }> = (
         </p>
         <a
           href={`${getBlockExplorerUrl(
-            5,
+            CHAIN_ID,
             props.address,
             BlockExplorerDataType.Address
           )}`}
