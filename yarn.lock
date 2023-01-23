@@ -1600,10 +1600,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@gelatonetwork/account-abstraction@^1.0.2-0":
-  version "1.0.2-0"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/account-abstraction/-/account-abstraction-1.0.2-0.tgz#3087e5c472a6f162b5c3d3df373f7848b189a5ff"
-  integrity sha512-MTIpaIccgHdWeKswudTtyI+CSSXyS5N5CIR8NsLgfd5igeba+g+pL6x/XyABb5VVHIXGYXMecO9qKisgsqbjbg==
+"@gelatonetwork/account-abstraction@^1.0.2-1":
+  version "1.0.2-1"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/account-abstraction/-/account-abstraction-1.0.2-1.tgz#9913817aedb2085d63a0a22dced4a15c3d850c42"
+  integrity sha512-ONAPz1Nsk/5UuNQnIiP4uA8lqQ3nE4MtwxlHvFAVZW7ltihNk+Fw/b5aGWnFRxDtpSFO6ePDob/cyTHbju2E6w==
   dependencies:
     "@gelatonetwork/relay-sdk" "3.1.0"
     "@typechain/ethers-v5" "10.2.0"

@@ -25,3 +25,5 @@ yarn-error.log*
 src/sdk/packages/contracts/types
 
 .env
+.env.testnet
+.env.mainnet
