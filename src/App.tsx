@@ -3,7 +3,6 @@ import { SafeEventEmitterProvider, UserInfo } from "@web3auth/base";
 import { GelatoSmartWallet } from "@gelatonetwork/account-abstraction";
 import "./App.css";
 import { ethers } from "ethers";
-import { Web3Auth } from "@web3auth/modal";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { Tasks } from "./components/Tasks";
 import { addTask } from "./store/slices/taskSlice";
@@ -14,13 +13,7 @@ import { Eoa } from "./components/Eoa";
 import { Counter } from "./components/Counter";
 import { CHAIN_ID, COUNTER_CONTRACT_ABI, TARGET } from "./constants";
 import { Loading } from "./components/Loading";
-import { CHAIN_NAMESPACES } from "@web3auth/base";
-import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-
-// Adapters
-
-import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
-import { MetamaskAdapter } from "@web3auth/metamask-adapter";
+import { GelatoLogin } from "./gelatoLogin";
 
 function App() {
   // Global State
@@ -28,8 +21,7 @@ function App() {
   const error = useAppSelector((state) => state.error.message);
   const dispatch = useAppDispatch();
 
-  // Local State
-  const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null);
+  const [gelatoLogin, setGelatoLogin] = useState<GelatoLogin | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [counter, setCounter] = useState<string>("0");
   const [web3AuthProvider, setWeb3AuthProvider] =
@@ -72,52 +64,14 @@ function App() {
     const init = async () => {
       setIsLoading(true);
       try {
-        const clientId = process.env.REACT_APP_WEB3AUTH_CLIENT_ID!;
-        const web3Auth = new Web3Auth({
-          clientId,
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: ethers.utils.hexValue(CHAIN_ID),
-          },
-          uiConfig: {
-            appName: "Gelato",
-            theme: "dark",
-            loginMethodsOrder: ["google"],
-            defaultLanguage: "en",
-          },
-          web3AuthNetwork: "testnet",
+        const gelatoLogin = new GelatoLogin(CHAIN_ID, {
+          apiKey: process.env.REACT_APP_SPONSOR_API_KEY!,
         });
-
-        const openloginAdapter = new OpenloginAdapter({
-          loginSettings: {
-            mfaLevel: "optional",
-          },
-          adapterSettings: {
-            uxMode: "redirect",
-            whiteLabel: {
-              name: "Gelato",
-              defaultLanguage: "en",
-              dark: true,
-              theme: { primary: "#b45f63" },
-            },
-          },
-        });
-
-        const walletConnectV1Adapter = new WalletConnectV1Adapter({
-          clientId,
-        });
-        const metamaskAdapter = new MetamaskAdapter({
-          clientId,
-        });
-
-        web3Auth.configureAdapter(openloginAdapter);
-        web3Auth.configureAdapter(walletConnectV1Adapter);
-        web3Auth.configureAdapter(metamaskAdapter);
-        await web3Auth.initModal();
-        setWeb3Auth(web3Auth);
-
-        if (web3Auth.provider) {
-          setWeb3AuthProvider(web3Auth.provider);
+        await gelatoLogin.init();
+        setGelatoLogin(gelatoLogin);
+        const provider = gelatoLogin.getProvider();
+        if (provider) {
+          setWeb3AuthProvider(provider);
         }
       } catch (error) {
         dispatch(addError((error as Error).message));
@@ -130,7 +84,7 @@ function App() {
 
   useEffect(() => {
     const init = async () => {
-      if (!web3Auth || !web3AuthProvider) {
+      if (!gelatoLogin || !web3AuthProvider) {
         return;
       }
       setIsLoading(true);
@@ -141,12 +95,12 @@ function App() {
         balance: (await signer.getBalance()).toString(),
         chainId: await signer.getChainId(),
       });
-      const user = await web3Auth.getUserInfo();
+      const user = await gelatoLogin.getUserInfo();
       setUser(user);
-      const gelatoSmartWallet = new GelatoSmartWallet(web3AuthProvider!, {
-        apiKey: process.env.REACT_APP_SPONSOR_API_KEY!,
-      });
-      await gelatoSmartWallet.init();
+      const gelatoSmartWallet = gelatoLogin.getSmartWallet();
+      if (!gelatoSmartWallet) {
+        throw new Error("Smart Wallet is not initialized");
+      }
       setSmartWallet(gelatoSmartWallet);
       setIsDeployed(await gelatoSmartWallet.isDeployed());
       const counterContract = new ethers.Contract(
@@ -172,18 +126,18 @@ function App() {
   }, [web3AuthProvider]);
 
   const login = async () => {
-    if (!web3Auth) {
+    if (!gelatoLogin) {
       return;
     }
-    const web3authProvider = await web3Auth.connect();
+    const web3authProvider = await gelatoLogin.login();
     setWeb3AuthProvider(web3authProvider);
   };
 
   const logout = async () => {
-    if (!web3Auth) {
+    if (!gelatoLogin) {
       return;
     }
-    await web3Auth.logout();
+    await gelatoLogin.logout();
     setWeb3AuthProvider(null);
     setWallet(null);
     setUser(null);
