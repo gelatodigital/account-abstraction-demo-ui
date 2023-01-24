@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { SafeEventEmitterProvider, UserInfo } from "@web3auth/base";
-import { GelatoSmartWallet } from "@gelatonetwork/account-abstraction";
 import "./App.css";
 import { ethers } from "ethers";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
@@ -13,7 +12,7 @@ import { Eoa } from "./components/Eoa";
 import { Counter } from "./components/Counter";
 import { CHAIN_ID, COUNTER_CONTRACT_ABI, TARGET } from "./constants";
 import { Loading } from "./components/Loading";
-import { GelatoLogin } from "./gelatoLogin";
+import {GelatoSmartLogin, GelatoSmartWalletInterface} from "@gelatonetwork/smart-login"
 
 function App() {
   // Global State
@@ -21,12 +20,12 @@ function App() {
   const error = useAppSelector((state) => state.error.message);
   const dispatch = useAppDispatch();
 
-  const [gelatoLogin, setGelatoLogin] = useState<GelatoLogin | undefined>();
+  const [gelatoLogin, setGelatoLogin] = useState<GelatoSmartLogin | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [counter, setCounter] = useState<string>("0");
   const [web3AuthProvider, setWeb3AuthProvider] =
     useState<SafeEventEmitterProvider | null>(null);
-  const [smartWallet, setSmartWallet] = useState<GelatoSmartWallet | null>(
+  const [smartWallet, setSmartWallet] = useState<GelatoSmartWalletInterface | null>(
     null
   );
   const [counterContract, setCounterContract] =
@@ -64,7 +63,7 @@ function App() {
     const init = async () => {
       setIsLoading(true);
       try {
-        const gelatoLogin = new GelatoLogin(CHAIN_ID, {
+        const gelatoLogin = new GelatoSmartLogin(CHAIN_ID, {
           apiKey: process.env.REACT_APP_SPONSOR_API_KEY!,
         });
         await gelatoLogin.init();
