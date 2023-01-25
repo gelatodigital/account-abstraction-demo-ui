@@ -12,7 +12,10 @@ import { Eoa } from "./components/Eoa";
 import { Counter } from "./components/Counter";
 import { CHAIN_ID, COUNTER_CONTRACT_ABI, TARGET } from "./constants";
 import { Loading } from "./components/Loading";
-import {GelatoSmartLogin, GelatoSmartWalletInterface} from "@gelatonetwork/smart-login"
+import {
+  GelatoSmartLogin,
+  GelatoSmartWalletInterface,
+} from "@gelatonetwork/smart-login";
 
 function App() {
   // Global State
@@ -20,14 +23,15 @@ function App() {
   const error = useAppSelector((state) => state.error.message);
   const dispatch = useAppDispatch();
 
-  const [gelatoLogin, setGelatoLogin] = useState<GelatoSmartLogin | undefined>();
+  const [gelatoLogin, setGelatoLogin] = useState<
+    GelatoSmartLogin | undefined
+  >();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [counter, setCounter] = useState<string>("0");
   const [web3AuthProvider, setWeb3AuthProvider] =
     useState<SafeEventEmitterProvider | null>(null);
-  const [smartWallet, setSmartWallet] = useState<GelatoSmartWalletInterface | null>(
-    null
-  );
+  const [smartWallet, setSmartWallet] =
+    useState<GelatoSmartWalletInterface | null>(null);
   const [counterContract, setCounterContract] =
     useState<ethers.Contract | null>(null);
   const [user, setUser] = useState<Partial<UserInfo> | null>(null);
@@ -148,7 +152,6 @@ function App() {
     <Loading />
   ) : (
     <div className="flex flex-col h-full w-[700px] gap-2 py-10">
-      {error && <ErrorMessage />}
       <Eoa user={user} wallet={wallet} />
       {smartWallet?.isInitialized() && (
         <div className="flex justify-center flex-col gap-10">
@@ -196,6 +199,7 @@ function App() {
 
   return (
     <>
+      {error && <ErrorMessage />}
       {web3AuthProvider && (
         <div className="flex justify-end p-5">
           <button
