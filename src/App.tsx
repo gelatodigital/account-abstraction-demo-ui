@@ -10,12 +10,15 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { SmartWallet } from "./components/SmartWallet";
 import { Eoa } from "./components/Eoa";
 import { Counter } from "./components/Counter";
-import { CHAIN_ID, COUNTER_CONTRACT_ABI, TARGET } from "./constants";
+import { COUNTER_CONTRACT_ABI } from "./constants";
 import { Loading } from "./components/Loading";
 import {
   GelatoSmartLogin,
   GelatoSmartWalletInterface,
+  LoginConfig,
+  SmartWalletConfig,
 } from "@gelatonetwork/smart-login";
+import { getChainConfig } from "./utils";
 
 function App() {
   // Global State
@@ -23,6 +26,10 @@ function App() {
   const error = useAppSelector((state) => state.error.message);
   const dispatch = useAppDispatch();
 
+  const [contractConfig, setContractConfig] = useState<{
+    chainId: number;
+    target: string;
+  }>();
   const [gelatoLogin, setGelatoLogin] = useState<
     GelatoSmartLogin | undefined
   >();
@@ -56,7 +63,10 @@ function App() {
       return dispatch(addError("Smart Wallet is not initiated"));
     }
     try {
-      const { taskId } = await smartWallet.sendTransaction(TARGET, data);
+      const { taskId } = await smartWallet.sendTransaction(
+        contractConfig?.target!,
+        data
+      );
       dispatch(addTask(taskId));
     } catch (error) {
       dispatch(addError((error as Error).message));
@@ -67,9 +77,28 @@ function App() {
     const init = async () => {
       setIsLoading(true);
       try {
-        const gelatoLogin = new GelatoSmartLogin(CHAIN_ID, {
-          apiKey: process.env.REACT_APP_SPONSOR_API_KEY!,
-        });
+        const queryParams = new URLSearchParams(window.location.search);
+        const chainIdParam = queryParams.get("chainId");
+        const { apiKey, chainId, target, rpcUrl } =
+          getChainConfig(chainIdParam);
+        const smartWalletConfig: SmartWalletConfig = { apiKey };
+        const loginConfig: LoginConfig = {
+          chain: {
+            id: chainId,
+            rpcUrl,
+          },
+          ui: {
+            theme: "dark",
+          },
+          openLogin: {
+            redirectUrl: `${window.location.origin}/?chainId=${chainId}`,
+          },
+        };
+        const gelatoLogin = new GelatoSmartLogin(
+          loginConfig,
+          smartWalletConfig
+        );
+        setContractConfig({ chainId, target });
         await gelatoLogin.init();
         setGelatoLogin(gelatoLogin);
         const provider = gelatoLogin.getProvider();
@@ -104,7 +133,7 @@ function App() {
       setSmartWallet(gelatoSmartWallet);
       setIsDeployed(await gelatoSmartWallet.isDeployed());
       const counterContract = new ethers.Contract(
-        TARGET,
+        contractConfig?.target!,
         COUNTER_CONTRACT_ABI,
         new ethers.providers.Web3Provider(web3AuthProvider!).getSigner()
       );
@@ -155,10 +184,11 @@ function App() {
           <SmartWallet
             address={smartWallet.getAddress()!}
             isDeployed={isDeployed}
+            chainId={contractConfig?.chainId!}
           />
           <Counter
-            address={TARGET}
-            chainId={CHAIN_ID}
+            address={contractConfig?.target!}
+            chainId={contractConfig?.chainId!}
             counter={counter}
             handleClick={increment}
           />
