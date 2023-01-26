@@ -13,6 +13,8 @@ export const getBlockExplorerUrl = (
       return `https://rinkeby.etherscan.io/${path}`;
     case 5:
       return `https://goerli.etherscan.io/${path}`;
+    case 100:
+      return `https://gnosisscan.io/${path}`;
     case 137:
       return `https://polygonscan.com/${path}`;
     case 420:
