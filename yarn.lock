@@ -1576,10 +1576,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@gelatonetwork/account-abstraction@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/account-abstraction/-/account-abstraction-1.0.4.tgz#04970e3e28d52d0beea08859d8f89a3766d16fbb"
-  integrity sha512-f/9G7skrXHvalX6kj0CysD8+2vqAeMgWVBJ29Uiy0pqihxSUqBTEQ5S9WValZSv7Jv2hdFlcp8POxuEkEbCW0w==
+"@gelatonetwork/account-abstraction@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/account-abstraction/-/account-abstraction-1.0.5.tgz#bb50bbee50c667c76641ce1eac30a09861c5c8f9"
+  integrity sha512-xv1udRvgdmmCfTYzeDHG/KkFD/VvZmDFHGwD53Ftg/IG/XrVDOUgMAPDRLVf25xZy30E2KZ/PoDOweSyczw1XA==
   dependencies:
     "@gelatonetwork/relay-sdk" "3.1.0"
     "@typechain/ethers-v5" "10.2.0"
@@ -1603,12 +1603,12 @@
     axios "0.24.0"
     ethers "5.7.2"
 
-"@gelatonetwork/smart-login@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/smart-login/-/smart-login-1.0.2.tgz#bfe0997377010cad6634dd35d5e3be8df701348a"
-  integrity sha512-8E2fF8MUdxXqkQ/PkizPaBMrp7Ce5xFvTye4gh6036s8QgXr+wLwoTFa2AaXRUOifHxmw1dxIbf9Ek/frApbRw==
+"@gelatonetwork/smart-login@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/smart-login/-/smart-login-1.0.3.tgz#ebf6367db79ca5c2ef344cc46e46ce477b04d34b"
+  integrity sha512-+8CPEAKHO1ulaJa8us5DX6IY457vEIxXdYTrZQ7dcDUszEGA25ufpZjFT57tySTim1MN80cN2FtMhbjud1P4Rw==
   dependencies:
-    "@gelatonetwork/account-abstraction" "^1.0.4"
+    "@gelatonetwork/account-abstraction" "^1.0.5"
     "@gelatonetwork/login" "^1.0.2"
 
 "@humanwhocodes/config-array@^0.11.8":
