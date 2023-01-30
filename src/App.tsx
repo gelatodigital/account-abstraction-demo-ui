@@ -12,13 +12,13 @@ import { Eoa } from "./components/Eoa";
 import { Counter } from "./components/Counter";
 import { COUNTER_CONTRACT_ABI } from "./constants";
 import { Loading } from "./components/Loading";
-import {
-  GelatoSmartLogin,
-  GelatoSmartWalletInterface,
-  LoginConfig,
-  SmartWalletConfig,
-} from "@gelatonetwork/smart-login";
 import { getChainConfig } from "./utils";
+import {
+  GaslessOnboarding,
+  GaslessWalletConfig,
+  GaslessWalletInterface,
+  LoginConfig,
+} from "@gelatonetwork/gasless-onboarding";
 
 function App() {
   // Global State
@@ -31,14 +31,15 @@ function App() {
     target: string;
   }>();
   const [gelatoLogin, setGelatoLogin] = useState<
-    GelatoSmartLogin | undefined
+    GaslessOnboarding | undefined
   >();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [counter, setCounter] = useState<string>("0");
   const [web3AuthProvider, setWeb3AuthProvider] =
     useState<SafeEventEmitterProvider | null>(null);
-  const [smartWallet, setSmartWallet] =
-    useState<GelatoSmartWalletInterface | null>(null);
+  const [smartWallet, setSmartWallet] = useState<GaslessWalletInterface | null>(
+    null
+  );
   const [counterContract, setCounterContract] =
     useState<ethers.Contract | null>(null);
   const [user, setUser] = useState<Partial<UserInfo> | null>(null);
@@ -81,7 +82,7 @@ function App() {
         const chainIdParam = queryParams.get("chainId");
         const { apiKey, chainId, target, rpcUrl } =
           getChainConfig(chainIdParam);
-        const smartWalletConfig: SmartWalletConfig = { apiKey };
+        const smartWalletConfig: GaslessWalletConfig = { apiKey };
         const loginConfig: LoginConfig = {
           chain: {
             id: chainId,
@@ -94,7 +95,7 @@ function App() {
             redirectUrl: `${window.location.origin}/?chainId=${chainId}`,
           },
         };
-        const gelatoLogin = new GelatoSmartLogin(
+        const gelatoLogin = new GaslessOnboarding(
           loginConfig,
           smartWalletConfig
         );
@@ -129,7 +130,7 @@ function App() {
       });
       const user = await gelatoLogin.getUserInfo();
       setUser(user);
-      const gelatoSmartWallet = gelatoLogin.getSmartWallet();
+      const gelatoSmartWallet = gelatoLogin.getGaslessWallet();
       setSmartWallet(gelatoSmartWallet);
       setIsDeployed(await gelatoSmartWallet.isDeployed());
       const counterContract = new ethers.Contract(
