@@ -64,7 +64,7 @@ function App() {
       return dispatch(addError("Smart Wallet is not initiated"));
     }
     try {
-      const { taskId } = await smartWallet.sendTransaction(
+      const { taskId } = await smartWallet.sponsorTransaction(
         contractConfig?.target!,
         data
       );
@@ -180,7 +180,7 @@ function App() {
   ) : (
     <div className="flex flex-col h-full w-[700px] gap-2 py-10">
       <Eoa user={user} wallet={wallet} />
-      {smartWallet?.isInitialized() && (
+      {smartWallet?.isInitiated() && (
         <div className="flex justify-center flex-col gap-10">
           <SmartWallet
             address={smartWallet.getAddress()!}
