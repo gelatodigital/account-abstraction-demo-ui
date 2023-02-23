@@ -21,6 +21,8 @@ export const getBlockExplorerUrl = (
       return `https://goerli-optimism.etherscan.io/${path}`;
     case 44787:
       return `https://alfajores.celoscan.io/${path}`;
+    case 84531:
+      return `https://goerli.basescan.org/${path}`
     case 80001:
       return `https://mumbai.polygonscan.com/${path}`;
     default:

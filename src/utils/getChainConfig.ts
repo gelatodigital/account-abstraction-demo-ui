@@ -13,6 +13,13 @@ export const getChainConfig = (
       target: "0x2dd703a17170C1b03abC26C4D5dc56c9382c5292",
       rpcUrl: process.env.REACT_APP_GNOSIS_RPC_URL!,
     };
+  } else if (chainId === "84531") {
+    return {
+      apiKey: process.env.REACT_APP_SPONSOR_API_KEY!,
+      chainId: 84531,
+      target: "0xFeeBbED640df887bE1aD697EC3719EB7205323E9",
+      rpcUrl: process.env.REACT_APP_BASEGOERLI_RPC_URL!,
+    };
   } else {
     return {
       apiKey: process.env.REACT_APP_SPONSOR_API_KEY!,
