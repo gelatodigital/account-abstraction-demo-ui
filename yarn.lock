@@ -1583,19 +1583,19 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@gelatonetwork/gasless-onboarding@0.0.2-alpha.3":
-  version "0.0.2-alpha.3"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/gasless-onboarding/-/gasless-onboarding-0.0.2-alpha.3.tgz#8eb4a0bfc15a2db9e1e021ca1be5e4b764359f5d"
-  integrity sha512-UDTzTf1koykVEv/grB/G9b2r9SXk0xbXVyRdJ4JOiCLkz6OnB/ku6ldJRqun3O5+DCCIDEd/aayX8hWy0A/ucw==
+"@gelatonetwork/gasless-onboarding@0.0.2-alpha.4":
+  version "0.0.2-alpha.4"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/gasless-onboarding/-/gasless-onboarding-0.0.2-alpha.4.tgz#bd0c9c2edcd41776b356db313c2aa8e028e08a24"
+  integrity sha512-SnpWoGJ04aemANvrkY8WxxYS4VHtDi+N2Dk8hZmocYbnCs5xJqaw872z2A5TmPV+DY4dTvW98D8lS4PUaolMdw==
   dependencies:
-    "@gelatonetwork/gasless-wallet" "^0.0.2-alpha.3"
+    "@gelatonetwork/gasless-wallet" "^0.0.2-alpha.4"
     "@walletconnect/client" "1.8.0"
     "@web3auth/modal" "4.2.3"
 
-"@gelatonetwork/gasless-wallet@^0.0.2-alpha.3":
-  version "0.0.2-alpha.3"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/gasless-wallet/-/gasless-wallet-0.0.2-alpha.3.tgz#65170a34e65e064bfe1c617a9b9773409cbcda8b"
-  integrity sha512-dzhUnW0b+wlTAztq5brxymr3ZWJG65BkPVlGflYPvKE6pCjjCXEfhsbMHZJtAuqkT8dYxFSJ3/2Z9LXlzOnQZQ==
+"@gelatonetwork/gasless-wallet@^0.0.2-alpha.4":
+  version "0.0.2-alpha.4"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/gasless-wallet/-/gasless-wallet-0.0.2-alpha.4.tgz#f8704b35244fc4b6a2e164bb87b0c9fe5ac8bcc2"
+  integrity sha512-aE0pdzXk7r8hLiwIez+kVxRDaUydxnGadEkadP1O7Lo6TOqVNjtl5MAyEY/EXnBLWOJlbmI6z3Pc9LBwRMiDZA==
   dependencies:
     "@gelatonetwork/relay-sdk" "3.1.0"
     "@typechain/ethers-v5" "10.2.0"

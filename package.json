@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@gelatonetwork/gasless-onboarding": "0.0.2-alpha.3",
+    "@gelatonetwork/gasless-onboarding": "0.0.2-alpha.4",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

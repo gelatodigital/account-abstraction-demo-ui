@@ -84,6 +84,7 @@ function App() {
           getChainConfig(chainIdParam);
         const smartWalletConfig: GaslessWalletConfig = { apiKey };
         const loginConfig: LoginConfig = {
+          domains: [window.location.origin],
           chain: {
             id: chainId,
             rpcUrl,
