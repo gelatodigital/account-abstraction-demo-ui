@@ -19,6 +19,7 @@ import {
   GaslessWalletInterface,
   LoginConfig,
 } from "@gelatonetwork/gasless-onboarding";
+import { Dropdown } from "./components/Dropdown";
 
 function App() {
   // Global State
@@ -29,6 +30,10 @@ function App() {
   const [contractConfig, setContractConfig] = useState<{
     chainId: number;
     target: string;
+  }>();
+  const [currentChain, setCurrentChain] = useState<{
+    id: number;
+    name: string;
   }>();
   const [gelatoLogin, setGelatoLogin] = useState<
     GaslessOnboarding | undefined
@@ -80,8 +85,9 @@ function App() {
       try {
         const queryParams = new URLSearchParams(window.location.search);
         const chainIdParam = queryParams.get("chainId");
-        const { apiKey, chainId, target, rpcUrl } =
+        const { apiKey, chainId, target, rpcUrl, name } =
           getChainConfig(chainIdParam);
+        setCurrentChain({ name, id: chainId });
         const smartWalletConfig: GaslessWalletConfig = { apiKey };
         const loginConfig: LoginConfig = {
           domains: [window.location.origin],
@@ -231,7 +237,8 @@ function App() {
     <>
       {error && <ErrorMessage />}
       {web3AuthProvider && (
-        <div className="flex justify-end p-5">
+        <div className="flex justify-between p-5 gap-5 items-center">
+          <Dropdown chain={currentChain?.name!} />
           <button
             onClick={logout}
             className="px-4 py-1 border-2 border-[#b45f63] rounded-lg"
