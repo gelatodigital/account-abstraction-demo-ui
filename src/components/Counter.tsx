@@ -7,7 +7,7 @@ export const Counter: React.FC<{
   handleClick: () => void;
 }> = (props) => {
   return (
-    <div className="flex flex-col gap-5 py-2">
+    <div className="flex flex-col gap-5 py-2 justify-center items-center">
       <a
         href={`${getBlockExplorerUrl(
           props.chainId,
@@ -17,9 +17,9 @@ export const Counter: React.FC<{
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div className="flex justify-center flex-col items-center gap-3">
+        <div className="flex justify-center flex-col items-center gap-3 w-fit">
           <p className="text-lg">Counter</p>
-          <p className="text-7xl">{props.counter}</p>
+          <p className="animate-bounce-short text-7xl">{props.counter}</p>
         </div>
       </a>
       <div className="flex justify-center">

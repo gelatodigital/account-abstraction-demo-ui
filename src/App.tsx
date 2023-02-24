@@ -193,6 +193,7 @@ function App() {
             chainId={contractConfig?.chainId!}
             counter={counter}
             handleClick={increment}
+            key={counter}
           />
         </div>
       )}
